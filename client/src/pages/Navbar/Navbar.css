@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  z-index: 10;
+}
+.menuIcon {
+  display: none;
+}
+.nav__menu > a,
+span {
+  animation: dropDown ease-in-out 1s;
+}
+@media only screen and (max-width: 999px) {
+  nav {
+    display: block;
+  }
+  .menuIcon {
+    display: block;
+    position: absolute;
+    top: 5px;
+    right: 20px;
+  }
+  .nav__menu {
+    display: none;
+  }
+  .active {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+@keyframes dropDown {
+  from {
+    transform: translateY(-500%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
