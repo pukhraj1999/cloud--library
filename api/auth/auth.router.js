@@ -48,5 +48,5 @@ authRouter.get("/signout", signout);
 //----------Using Controllers For USER--------------------
 authRouter.get("/getusers", getAllUsers);
 authRouter.param("userId", getUserById);
-authRouter.get("/user/:userId", isSignedInz, getUser);
+authRouter.get("/user/:userId", isSignedIn, getUser);
 //--------------------------------------------------------

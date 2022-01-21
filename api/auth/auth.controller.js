@@ -61,8 +61,10 @@ export const signin = (req, res) => {
       if (err || !user) return res.status(400).json("User Not Found!!");
       if (!user.authenticate(password))
         return res.status(401).json({ error: "Invalid Credentials!!" });
-      const token = jwt.sign({ _id: user._id }, process.env.SECRET);
-      res.cookie("token", token, { expire: new Date() + 9999 });
+      const token = jwt.sign({ _id: user._id }, process.env.SECRET, {
+        expiresIn: "2d",
+      });
+      res.cookie("token", token);
       const { _id, name, email, role } = user;
       return res.json({ token, user: { _id, name, email, role } });
     }

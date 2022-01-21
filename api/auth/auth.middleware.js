@@ -1,11 +1,16 @@
-import expressJWT from "express-jwt";
+import jwt from "jsonwebtoken";
 import User from "./user.model";
 //---------------AUTH MIDDLEWARE------------------------------------------------------
-export const isSignedIn = () =>
-  expressJWT({
-    secret: process.env.SECRET,
-    userProperty: "auth",
-  });
+export const isSignedIn = async (req, res, next) => {
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const verify = jwt.verify(token, process.env.SECRET);
+    req.auth = verify;
+    next();
+  } catch (err) {
+    res.status(401).json({ error: "Unauthorized user" });
+  }
+};
 
 export const isAuthenticated = (req, res, next) => {
   let checker = req.profile && req.auth && req.profile._id === req.auth._id;
