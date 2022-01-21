@@ -4,7 +4,12 @@ export const authRouter = express.Router();
 
 //--------Importing Controllers And Middlewares------------------
 import { signup, signin, signout } from "./auth.controller";
-import { getAllUsers, getUser } from "./auth.controller";
+import {
+  getAllUsers,
+  getUser,
+  updateUser,
+  deleteUser,
+} from "./auth.controller";
 import {
   isSignedIn,
   isAuthenticated,
@@ -46,7 +51,21 @@ authRouter.get("/signout", signout);
 //-------------------------------------------------------
 
 //----------Using Controllers For USER--------------------
-authRouter.get("/getusers", getAllUsers);
 authRouter.param("userId", getUserById);
+authRouter.get(
+  "/user/:userId/getusers",
+  isSignedIn,
+  isAuthenticated,
+  isAdmin,
+  getAllUsers
+);
 authRouter.get("/user/:userId", isSignedIn, getUser);
+authRouter.put("/user/:userId", isSignedIn, isAuthenticated, updateUser);
+authRouter.post(
+  "/user/:userId",
+  isSignedIn,
+  isAuthenticated,
+  isAdmin,
+  deleteUser
+);
 //--------------------------------------------------------

@@ -102,32 +102,53 @@ export const getUser = (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
-  const { name, email, password, cofirmPasswd } = req.body;
+  const { name, email, role, password, confirmPasswd } = req.body;
   try {
     if (password !== confirmPasswd)
-      return res.status(400).json({ error: "Both Passwords are not Same!!" });
+      return res.status(400).json({ error: "Both Password should be same." });
   } catch (err) {
-    res.status(422).json({ error: err });
+    return res.status(400).json({ error: err });
   }
-  try {
-    const user = await User.findOneAndUpdate(
-      {
-        _id: profile._id,
-      },
-      {
+  User.findByIdAndUpdate(
+    { _id: req.profile._id },
+    {
+      $set: {
         name,
         email,
         role,
         password,
-      }
-    );
-    user.salt = undefined;
-    user.encry_password = undefined;
-    user.createdAt = undefined;
-    user.updatedAt = undefined;
-    res.status(422).json({ user: user });
-  } catch (err) {
-    res.status(422).json({ error: err });
-  }
+        confirmPasswd,
+      },
+    },
+    {
+      new: true,
+      useFindAndModify: false,
+    },
+    (error, user) => {
+      if (error || !user)
+        return res.status(400).json({ error: "User not found" });
+      user.salt = undefined;
+      user.encry_password = undefined;
+      user.createdAt = undefined;
+      user.updatedAt = undefined;
+      res.status(200).json(user);
+    }
+  );
+};
+export const deleteUser = async (req, res) => {
+  const { deleteId } = req.body;
+  User.findOneAndDelete(
+    {
+      _id: deleteId,
+    },
+    (err, user) => {
+      if (err)
+        return res.status(400).json({ error: "Failed to Delete the User!!" });
+      if (!user) return res.status(400).json({ error: "User Not Exist!!" });
+      return res
+        .status(400)
+        .json({ msg: "Successfully Deleted!!", user: user });
+    }
+  );
 };
 //---------------------------------------------------------------------------------------
