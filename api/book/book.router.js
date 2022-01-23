@@ -3,9 +3,9 @@ export const bookRouter = express.Router();
 
 //--------Importing Controllers And Middlewares------------------
 import { createBook } from "./book.controller";
-import { uploadBookCover } from "./book.middleware";
+import { uploadCover } from "./book.middleware";
 //-----------------------------------------------
 
 //----------Using Controllers For Book--------------------
-bookRouter.post("/createbook", uploadBookCover.single("coverImg"), createBook);
+bookRouter.post("/createbook", uploadCover, createBook);
 //-------------------------------------------------------

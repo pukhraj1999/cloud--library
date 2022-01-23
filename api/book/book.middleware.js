@@ -21,14 +21,40 @@ export const uploadBookCover = multer({
     )
       cb(null, true);
     else {
-      console.log("Only jpg and png support");
-      cb(null, false);
+      cb(
+        {
+          success: false,
+          error: "Invalid file type. Only jpg, png image files are allowed.",
+        },
+        false
+      );
     }
   },
   limits: {
     fileSize: 3 * 1024 * 1024,
   },
-});
+}).single("coverImg");
+const handleFileErrors = (req, res, next) => {
+  uploadBookCover(req, res, function (err) {
+    if (err) {
+      res.status(500);
+      if (err.code == "LIMIT_FILE_SIZE") {
+        err.error = "File Size is too large. Allowed file size is 2MB";
+        err.success = false;
+      }
+      return res.json(err);
+    } else {
+      if (!req.file) {
+        res.status(500);
+        res.json("file not found");
+      }
+      next();
+    }
+  });
+};
+export const uploadCover = (req, res, next) => {
+  handleFileErrors(req, res, next);
+};
 //------------------------------------------------------------------------------------
 
 //---------Book MIDDLEWARE------------------------------------------------------------
