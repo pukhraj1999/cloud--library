@@ -43,7 +43,7 @@ bookRouter.post(
   uploadCover,
   createBook
 );
-bookRouter.post(
+bookRouter.put(
   "/:userId/updatebook/:bookId",
   isSignedIn,
   isAuthenticated,

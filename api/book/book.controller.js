@@ -1,4 +1,6 @@
 import Book from "./book.model";
+import path from "path";
+import fs from "fs";
 
 //-----------CRUD OPERATION FOR Book-----------------------------------------------------
 export const getAllBooks = async (req, res) => {
@@ -69,6 +71,12 @@ export const deleteBook = async (req, res) => {
       _id: req.book._id,
     },
     (err, book) => {
+      const filePath = book.coverImg;
+      try {
+        fs.unlinkSync(filePath);
+      } catch (err) {
+        return res.status(400).json({ error: err });
+      }
       if (err)
         return res.status(400).json({ error: "Failed to Delete the Book!!" });
       if (!book) return res.status(400).json({ error: "Book Not Exist!!" });

@@ -42,7 +42,7 @@ authorRouter.post(
   isAdmin,
   createAuthor
 );
-authorRouter.post(
+authorRouter.put(
   "/:userId/updateauthor/:authorId",
   isSignedIn,
   isAuthenticated,

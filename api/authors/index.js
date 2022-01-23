@@ -1,1 +1,1 @@
-export { authorRouter } from "./book.router";
+export { authorRouter } from "./author.router";
