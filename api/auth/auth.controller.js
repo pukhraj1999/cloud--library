@@ -146,7 +146,7 @@ export const deleteUser = async (req, res) => {
         return res.status(400).json({ error: "Failed to Delete the User!!" });
       if (!user) return res.status(400).json({ error: "User Not Exist!!" });
       return res
-        .status(400)
+        .status(200)
         .json({ msg: "Successfully Deleted!!", user: user });
     }
   );
