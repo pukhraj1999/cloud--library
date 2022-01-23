@@ -7,6 +7,26 @@ const bookSchema = new mongoose.Schema(
       maxlength: 30,
       required: true,
     },
+    author: {
+      type: String,
+      maxlength: 30,
+      required: true,
+    },
+    desc: {
+      type: String,
+      required: true,
+    },
+    coverImg: {
+      type: String,
+    },
+    buyLink: {
+      type: String,
+      required: true,
+    },
+    downloadLink: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );

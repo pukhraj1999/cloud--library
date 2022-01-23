@@ -8,5 +8,5 @@ import { bookRouter } from "./book";
 
 //------Using All Routes--------------
 allRoutes.use("/", authRouter);
-allRoutes.use("/book/", bookRouter);
+allRoutes.use("/book", bookRouter);
 //------------------------------------
