@@ -3,7 +3,7 @@ import Book from "./book.model";
 //-----------CRUD OPERATION FOR Book-----------------------------------------------------
 export const getAllBooks = async (req, res) => {
   try {
-    const books = await Book.find();
+    const books = await Book.find().populate("author", "_id name");
     res.status(200).json({ books: books });
   } catch (err) {
     res.status(422).json({ error: err });
@@ -11,7 +11,7 @@ export const getAllBooks = async (req, res) => {
 };
 
 export const getBook = (req, res) => {
-  return res.json({ user: req.book });
+  return res.json({ book: req.book });
 };
 
 export const createBook = (req, res) => {

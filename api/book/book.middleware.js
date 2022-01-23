@@ -59,10 +59,12 @@ export const uploadCover = (req, res, next) => {
 
 //---------Book MIDDLEWARE------------------------------------------------------------
 export const getBookById = (req, res, next, id) => {
-  Book.findById(id, (err, book) => {
-    if (err) return res.status(422).json({ error: "Book Not Found By ID" });
-    req.book = book;
-    next();
-  });
+  Book.findById(id)
+    .populate("author", "_id name")
+    .exec((err, book) => {
+      if (err) return res.status(422).json({ error: "Book Not Found By ID" });
+      req.book = book;
+      next();
+    });
 };
 //------------------------------------------------------------------------------------

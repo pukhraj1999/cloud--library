@@ -8,10 +8,52 @@ import {
   isAuthenticated,
   isAdmin,
 } from "../auth/auth.middleware";
-import {} from "./author.controller";
-import {} from "./author.middleware";
+import {
+  getAllAuthors,
+  getAuthor,
+  createAuthor,
+  updateAuthor,
+  deleteAuthor,
+} from "./author.controller";
+import { getAuthorById } from "./author.middleware";
 //-----------------------------------------------
 
-//----------Using Controllers For Book--------------------
+//----------Using Controllers For Author--------------------
 authorRouter.param("userId", getUserById);
+authorRouter.param("authorId", getAuthorById);
+authorRouter.get(
+  "/:userId/getallauthors",
+  isSignedIn,
+  isAuthenticated,
+  isAdmin,
+  getAllAuthors
+);
+authorRouter.get(
+  "/:userId/:authorId",
+  isSignedIn,
+  isAuthenticated,
+  isAdmin,
+  getAuthor
+);
+authorRouter.post(
+  "/:userId/createauthor",
+  isSignedIn,
+  isAuthenticated,
+  isAdmin,
+  createAuthor
+);
+authorRouter.post(
+  "/:userId/updateauthor/:authorId",
+  isSignedIn,
+  isAuthenticated,
+  isAdmin,
+  updateAuthor
+);
+authorRouter.delete(
+  "/:userId/deleteauthor/:authorId",
+  isSignedIn,
+  isAuthenticated,
+  isAdmin,
+  deleteAuthor
+);
 //-------------------------------------------------------

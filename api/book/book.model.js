@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-
 const bookSchema = new mongoose.Schema(
   {
     name: {
@@ -8,9 +7,8 @@ const bookSchema = new mongoose.Schema(
       required: true,
     },
     author: {
-      type: String,
-      maxlength: 30,
-      required: true,
+      type: mongoose.Schema.ObjectId,
+      ref: "Author",
     },
     desc: {
       type: String,
