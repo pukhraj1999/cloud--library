@@ -3,7 +3,12 @@ import React from "react";
 function UserList() {
   return (
     <>
-      <div className="my-10">
+      <div
+        style={{
+          animation: "dropDown 1s ease-in-out",
+        }}
+        className="my-10"
+      >
         <h1 className="text-6xl text-center font-serif">Users</h1>
         <div className="mt-10 mx-4">
           <div className="bg-gray-400 text-white shadow-2xl px-6 py-2 text-xl lg:text-3xl grid grid-cols-3">

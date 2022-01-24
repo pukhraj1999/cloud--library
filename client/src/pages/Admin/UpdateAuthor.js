@@ -8,14 +8,14 @@ function EditAuthor() {
         <form action="" className="">
           <div className="flex justify-center mt-6">
             <input
-              className="lg:w-2/4  px-2 py-2 drop-shadow-lg bg-white outline-none text-xl"
+              className="lg:w-3/4  px-2 py-2 drop-shadow-lg bg-white outline-none text-xl"
               type="text"
               placeholder="Name"
             />
           </div>
           <div className="flex justify-center mt-6">
             <textarea
-              className="lg:w-2/4 h-60 resize-none px-2 py-2 drop-shadow-lg bg-white outline-none text-xl"
+              className="lg:w-3/4 h-60 resize-none px-2 py-2 drop-shadow-lg bg-white outline-none text-xl"
               type="text"
               placeholder="Description"
             />

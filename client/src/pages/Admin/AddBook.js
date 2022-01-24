@@ -3,7 +3,12 @@ import React from "react";
 function AddBook() {
   return (
     <>
-      <div className="my-10">
+      <div
+        style={{
+          animation: "dropDown 1s ease-in-out",
+        }}
+        className="my-10"
+      >
         <h1 className="text-6xl text-center font-serif">Add Book</h1>
         <form action="" className="">
           <div className="flex justify-center mt-6">
