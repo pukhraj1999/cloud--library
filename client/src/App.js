@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import Admin from "./pages/Admin/Admin.js";
 import Author from "./pages/Authors/Author.js";
 import Authors from "./pages/Authors/Authors.js";
 import Book from "./pages/Books/Book.js";
@@ -13,6 +14,7 @@ function App() {
     <>
       <Navbar />
       <Routes>
+        <Route exact path="/admin" element={<Admin />} />
         <Route exact path="/" element={<Books />} />
         <Route exact path="/book/:id" element={<Book />} />
         <Route exact path="/comics" element={<Comics />} />

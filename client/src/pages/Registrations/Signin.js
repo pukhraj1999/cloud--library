@@ -10,7 +10,7 @@ function Signin() {
             <img className="rounded-3xl" src={pic} alt="" />
           </div>
           <div className="lg:my-20 space-y-4 drop-shadow-2xl h-fit bg-white my-12 lg:mx-6 flex-row  px-4 py-4 rounded-3xl">
-            <h1 className="text-3xl font-serif text-center font-bold">
+            <h1 className="text-4xl font-serif text-center font-bold">
               Sign in
             </h1>
             <Input label="Email" />
