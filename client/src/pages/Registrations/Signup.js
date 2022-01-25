@@ -1,7 +1,7 @@
 import { useState } from "react";
 import pic from "../../assets/signup.svg";
 import Input from "./Input";
-import { signup } from "../../api/userApi";
+import { signup } from "../../api/Api";
 import { useNavigate } from "react-router-dom";
 
 function Signup() {

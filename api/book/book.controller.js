@@ -18,6 +18,14 @@ export const getBook = (req, res) => {
 
 export const createBook = (req, res) => {
   const { name, author, desc, buyLink, downloadLink } = req.body;
+  if (
+    name === "" ||
+    author === "" ||
+    desc === "" ||
+    buyLink === "" ||
+    downloadLink === ""
+  )
+    return res.status(422).json({ error: "Fill all the fields!!" });
   try {
     const book = new Book({
       name,
@@ -28,13 +36,14 @@ export const createBook = (req, res) => {
     });
     if (req.file) {
       book.coverImg = req.file.path;
+
+      book.save((err, book) => {
+        if (err) res.status(400).json({ error: "Failed to save the book!!" });
+        return res.status(200).json({ msg: "Successfully Created!!", book });
+      });
     }
-    book.save((err, book) => {
-      if (err) res.status(400).json({ error: "Failed to save the book!!" });
-      res.status(200).json({ msg: "Successfully Created!!", book });
-    });
   } catch (err) {
-    res.status(400).json({ error: "Failed to Save Book!!" });
+    return res.status(400).json({ error: "Failed to Save Book!!" });
   }
 };
 

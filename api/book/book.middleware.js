@@ -15,16 +15,17 @@ export const uploadBookCover = multer({
   storage: storage,
   fileFilter: function (req, file, cb) {
     if (
-      file.mimetype == "image/png" ||
-      file.mimetype == "image/jpg" ||
-      file.mimetype == "image/svg"
+      file.mimetype === "image/png" ||
+      file.mimetype === "image/jpeg" ||
+      file.mimetype === "image/svg+xml"
     )
       cb(null, true);
     else {
       cb(
         {
           success: false,
-          error: "Invalid file type. Only jpg, png image files are allowed.",
+          error:
+            "Invalid file type. Only jpg, png,svg image files are allowed.",
         },
         false
       );
@@ -37,7 +38,7 @@ export const uploadBookCover = multer({
 const handleFileErrors = (req, res, next) => {
   uploadBookCover(req, res, function (err) {
     if (err) {
-      res.status(500);
+      res.status(422);
       if (err.code == "LIMIT_FILE_SIZE") {
         err.error = "File Size is too large. Allowed file size is 2MB";
         err.success = false;
@@ -45,8 +46,8 @@ const handleFileErrors = (req, res, next) => {
       return res.json(err);
     } else {
       if (!req.file) {
-        res.status(500);
-        res.json("file not found");
+        res.status(422);
+        res.json({ error: "file not found!!" });
       }
       next();
     }

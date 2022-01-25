@@ -16,6 +16,8 @@ export const getAuthor = (req, res) => {
 
 export const createAuthor = (req, res) => {
   const { name, desc } = req.body;
+  if (name === "" || desc === "")
+    return res.status(422).json({ error: "Fill all the fields!!" });
   try {
     const author = new Author({
       name,
