@@ -1,6 +1,6 @@
 import pic from "../../assets/signin.svg";
 import Input from "./Input";
-import { Profiler, useState } from "react";
+import { useState } from "react";
 import { signin } from "../../api/userApi";
 import { useNavigate } from "react-router-dom";
 
