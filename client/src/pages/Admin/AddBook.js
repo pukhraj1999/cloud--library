@@ -32,6 +32,15 @@ function AddBook() {
       .then((res) => {
         setStatus({ success: "Successfully Added!!", error: "" });
         activateModal();
+        setData({
+          name: "",
+          author: "",
+          desc: "",
+          coverImg: "",
+          downloadLink: "",
+          buyLink: "",
+          formData: new FormData(),
+        });
       })
       .catch((err) => {
         setStatus({ error: err.response.data.error, success: "" });
