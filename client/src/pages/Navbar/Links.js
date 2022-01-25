@@ -1,11 +1,16 @@
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "./Navbar.css";
 
 function Links() {
+  const [user, setUser] = useState(false);
   const activateModal = () => {
     const toggle = document.getElementById("modal");
     toggle.classList.toggle("hidden");
   };
+  useEffect(() => {
+    if (localStorage.getItem("profile")) setUser(true);
+  }, []);
   return (
     <>
       <div id="menu" className="nav__menu space-x-4 ">
@@ -35,18 +40,37 @@ function Links() {
         >
           Contribute
         </span>
-        <NavLink
-          className="cursor-pointer hover:bg-indigo-500 hover:rounded-full active:bg-red-300 drop-shadow-lg px-2 py-4 "
-          to="/signin"
-        >
-          Sign in
-        </NavLink>
-        <NavLink
-          className="cursor-pointer hover:bg-indigo-500 hover:rounded-full active:bg-red-300 drop-shadow-lg px-4 py-4 "
-          to="/signup"
-        >
-          Sign up
-        </NavLink>
+        {!user && (
+          <>
+            <NavLink
+              className="cursor-pointer hover:bg-indigo-500 hover:rounded-full active:bg-red-300 drop-shadow-lg px-2 py-4 "
+              to="/signin"
+            >
+              Sign in
+            </NavLink>
+            <NavLink
+              className="cursor-pointer hover:bg-indigo-500 hover:rounded-full active:bg-red-300 drop-shadow-lg px-4 py-4 "
+              to="/signup"
+            >
+              Sign up
+            </NavLink>
+          </>
+        )}
+        {user && (
+          <>
+            <NavLink
+              className="cursor-pointer hover:bg-indigo-500 hover:rounded-full active:bg-red-300 drop-shadow-lg px-2 py-4 "
+              to="/signout"
+              onClick={() => {
+                setTimeout(() => {
+                  setUser(false);
+                }, 200);
+              }}
+            >
+              Sign out
+            </NavLink>
+          </>
+        )}
       </div>
       {/* Css Modal */}
       <div id="modal" className="hidden modal">

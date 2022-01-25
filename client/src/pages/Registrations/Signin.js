@@ -33,6 +33,7 @@ function Signin() {
           if (JSON.parse(localStorage.getItem("profile")).user.role !== 0)
             history("/admin");
           else history("/");
+          window.location.reload();
         }, 2000);
       })
       .catch((err) => {
