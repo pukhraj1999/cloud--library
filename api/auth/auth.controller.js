@@ -22,7 +22,7 @@ export const signup = async (req, res) => {
     if (password !== confirmPasswd)
       return res.status(400).json({ error: "Both Passwords are not Same!!" });
   } catch (err) {
-    res.status(422).json({ error: err });
+    return res.status(422).json({ error: err });
   }
 
   const user = new User({
@@ -47,7 +47,7 @@ export const signin = (req, res) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    res.status(422).json({
+    return res.status(422).json({
       param: errors.array()[0].param,
       error: errors.array()[0].msg,
     });
@@ -64,7 +64,6 @@ export const signin = (req, res) => {
       const token = jwt.sign({ _id: user._id }, process.env.SECRET, {
         expiresIn: "2d",
       });
-      res.cookie("token", token);
       const { _id, name, email, role } = user;
       return res.json({ token, user: { _id, name, email, role } });
     }

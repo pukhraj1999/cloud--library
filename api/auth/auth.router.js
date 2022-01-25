@@ -41,7 +41,7 @@ authRouter.post(
   "/signin",
   [
     check("email", "email is required").isEmail(),
-    check("password", "password should be atleast 6 character").isLength({
+    check("password", "Invalid Credentials!!").isLength({
       min: 6,
     }),
   ],
