@@ -15,7 +15,7 @@ import {
   updateBook,
   deleteBook,
 } from "./book.controller";
-import { getBookById, uploadCover } from "./book.middleware";
+import { getBookById } from "./book.middleware";
 //-----------------------------------------------
 
 //----------Using Controllers For Book--------------------
@@ -40,7 +40,6 @@ bookRouter.post(
   isSignedIn,
   isAuthenticated,
   isAdmin,
-  uploadCover,
   createBook
 );
 bookRouter.put(
@@ -48,7 +47,6 @@ bookRouter.put(
   isSignedIn,
   isAuthenticated,
   isAdmin,
-  uploadCover,
   updateBook
 );
 bookRouter.delete(

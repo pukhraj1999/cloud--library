@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import { addBook } from "../../api/Api";
+import React, { useState, useEffect } from "react";
+import { showAuthor, addBook } from "../../api/Api";
 
 function AddBook() {
   const activateModal = () => {
     const toggle = document.getElementById("addBook");
     toggle.classList.toggle("hidden");
   };
+  const [authorData, setAuthorData] = useState(null);
   const [data, setData] = useState({
     name: "",
     author: "",
@@ -19,6 +20,16 @@ function AddBook() {
     error: "",
     success: "",
   });
+  useEffect(() => {
+    const userId = JSON.parse(localStorage.getItem("profile")).user._id;
+    showAuthor(userId)
+      .then((res) => {
+        setAuthorData(res.data.authors);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   const handleChange = (e) => {
     const { name } = e.target;
     const value = name === "coverImg" ? e.target.files[0] : e.target.value;
@@ -56,10 +67,10 @@ function AddBook() {
         className="my-10"
       >
         <h1 className="text-6xl text-center font-serif">Add Book</h1>
-        <form action="" className="">
+        <form>
           <div className="flex justify-center mt-6">
             <input
-              className="lg:w-2/4  px-2 py-2 drop-shadow-lg bg-white outline-none text-xl"
+              className="lg:w-2/4 md:w-3/4 px-2 py-2 drop-shadow-lg bg-white outline-none text-xl"
               type="text"
               placeholder="Name"
               name="name"
@@ -69,7 +80,7 @@ function AddBook() {
           </div>
           <div className="flex justify-center mt-6">
             <textarea
-              className="lg:w-2/4 h-60 resize-none px-2 py-2 drop-shadow-lg bg-white outline-none text-xl"
+              className="lg:w-2/4 md:w-3/4 h-60 resize-none px-2 py-2 drop-shadow-lg bg-white outline-none text-xl"
               type="text"
               placeholder="Description"
               name="desc"
@@ -80,7 +91,7 @@ function AddBook() {
           <div className="flex justify-center mt-6">
             <input
               className="text-center text-indigo-300 
-              lg:w-2/4 px-2 py-2 drop-shadow-lg
+              lg:w-2/4 md:w-3/4 px-2 py-2 drop-shadow-lg
               bg-white outline-none text-xl
               file:border-0 file:rounded-full file:px-2
               file:py-2 file:bg-indigo-300 
@@ -97,19 +108,23 @@ function AddBook() {
           </div>
           <div className="flex justify-center mt-6">
             <select
-              className="text-center lg:w-2/4 px-2 py-2 drop-shadow-lg bg-white outline-none text-xl"
+              className="text-center md:w-3/4 lg:w-2/4 px-2 py-2 drop-shadow-lg bg-white outline-none text-xl"
               name="author"
               value={data.value}
               onChange={handleChange}
             >
               <option>Select Author</option>
-              <option value="61ed9f4a984cf1b52cc7af85">A</option>
-              <option value="B">B</option>
+              {authorData &&
+                authorData.map((item, key) => (
+                  <option key={key} value={item._id}>
+                    {item.name}
+                  </option>
+                ))}
             </select>
           </div>
           <div className="flex justify-center mt-6">
             <input
-              className="lg:w-2/4 px-2 py-2 drop-shadow-lg bg-white outline-none text-xl"
+              className="lg:w-2/4 md:w-3/4 px-2 py-2 drop-shadow-lg bg-white outline-none text-xl"
               type="text"
               placeholder="Download Link"
               name="downloadLink"
@@ -119,7 +134,7 @@ function AddBook() {
           </div>
           <div className="flex justify-center mt-6">
             <input
-              className="lg:w-2/4 px-2 py-2 drop-shadow-lg bg-white outline-none text-xl"
+              className="lg:w-2/4 md:w-3/4 px-2 py-2 drop-shadow-lg bg-white outline-none text-xl"
               type="text"
               placeholder="Buy Link"
               name="buyLink"

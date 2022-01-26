@@ -1,5 +1,6 @@
 import Book from "./book.model";
-import path from "path";
+import formidable from "formidable"; //use to store files in DB
+import _ from "lodash";
 import fs from "fs";
 
 //-----------CRUD OPERATION FOR Book-----------------------------------------------------
@@ -17,75 +18,79 @@ export const getBook = (req, res) => {
 };
 
 export const createBook = (req, res) => {
-  const { name, author, desc, buyLink, downloadLink } = req.body;
-  if (
-    name === "" ||
-    author === "" ||
-    desc === "" ||
-    buyLink === "" ||
-    downloadLink === ""
-  )
-    return res.status(422).json({ error: "Fill all the fields!!" });
-  try {
-    const book = new Book({
-      name,
-      author,
-      desc,
-      buyLink,
-      downloadLink,
-    });
-    if (req.file) {
-      book.coverImg = req.file.path;
+  let Form = new formidable.IncomingForm();
+  Form.keepExtensions = true;
 
-      book.save((err, book) => {
-        if (err) res.status(400).json({ error: "Failed to save the book!!" });
-        return res.status(200).json({ msg: "Successfully Created!!", book });
-      });
+  Form.parse(req, (err, fields, file) => {
+    if (err) return res.status(400).json({ error: "Problem with image!!!" });
+
+    const { name, desc, author, buyLink, downloadLink } = fields;
+
+    if (!name || !desc || !author || !buyLink || !downloadLink)
+      return res.status(400).json({ error: "Must include all fields!!!" });
+
+    let book = new Book(fields);
+
+    console.log(file.coverImg.mimetype);
+    //handle files [photo is the name give to file by us]
+    if (file.coverImg) {
+      if (file.coverImg.size > 3 * 1024 * 1024)
+        //covert 3 mb in bytes
+        return res
+          .status(400)
+          .json({ error: "File size mush be less than 3MB!!" });
+      //storing file in product model
+      book.coverImg.data = fs.readFileSync(file.coverImg.filepath);
+      book.coverImg.contentType = file.coverImg.mimetype;
     }
-  } catch (err) {
-    return res.status(400).json({ error: "Failed to Save Book!!" });
-  }
+
+    //save in DB
+    if (file.coverImg)
+      book.save((err, book) => {
+        if (err || !book)
+          res.status(400).json({ error: "Saving book in DB failed!!" });
+        res.status(200).json(book);
+      });
+  });
 };
 
 export const updateBook = async (req, res) => {
-  const { name, author, desc, buyLink, downloadLink } = req.body;
+  let Form = new formidable.IncomingForm();
+  Form.keepExtensions = true;
 
-  if (req.file)
-    Book.findByIdAndUpdate(
-      { _id: req.book._id },
-      {
-        $set: {
-          name,
-          author,
-          desc,
-          buyLink,
-          downloadLink,
-          coverImg: req.file.path,
-        },
-      },
-      {
-        new: true,
-        useFindAndModify: false,
-      },
-      (error, book) => {
-        if (error || !book)
-          return res.status(400).json({ error: "Book not found" });
-        res.status(200).json({ msg: "Successfully Updated!!", book });
-      }
-    );
+  Form.parse(req, (err, fields, file) => {
+    if (err) return res.status(400).json({ error: "Problem with image!!" });
+
+    //updation code
+    let book = req.book;
+    book = _.extend(book, fields); //deconstruct and fill the fields
+
+    if (file.coverImg) {
+      if (file.coverImg.size > 3 * 1024 * 1024)
+        return res
+          .status(400)
+          .json({ error: "File size must be less than 3MB" });
+
+      //storing file in product model
+      file.coverImg.data = fs.readFileSync(file.coverImg.filepath);
+      file.coverImg.contentType = file.coverImg.mimetype;
+    }
+
+    //save in DB
+    book.save((err, book) => {
+      if (err || !book)
+        res.status(400).json({ error: "Updation of product in DB failed!!" });
+      res.status(200).json(book);
+    });
+  });
 };
+
 export const deleteBook = async (req, res) => {
   Book.findOneAndDelete(
     {
       _id: req.book._id,
     },
     (err, book) => {
-      const filePath = book.coverImg;
-      try {
-        fs.unlinkSync(filePath);
-      } catch (err) {
-        return res.status(400).json({ error: err });
-      }
       if (err)
         return res.status(400).json({ error: "Failed to Delete the Book!!" });
       if (!book) return res.status(400).json({ error: "Book Not Exist!!" });
