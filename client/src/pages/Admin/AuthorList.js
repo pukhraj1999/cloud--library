@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import UpdateAuthor from "./UpdateAuthor";
-import { showAuthor } from "../../api/Api";
+import { showAuthor, deleteAuthor } from "../../api/Api";
 import Loading from "../Loading/Loading";
 
 function AuthorList() {
@@ -9,7 +9,8 @@ function AuthorList() {
     toggle.classList.toggle("hidden");
   };
   const [data, setData] = useState(null);
-  useEffect(() => {
+  const [authorId, setAuthorId] = useState(null);
+  const preload = () => {
     const userId = JSON.parse(localStorage.getItem("profile")).user._id;
     showAuthor(userId)
       .then((res) => {
@@ -18,7 +19,18 @@ function AuthorList() {
       .catch((err) => {
         console.log(err);
       });
+  };
+  useEffect(() => {
+    preload();
   }, []);
+  const authorDelete = (bookId) => {
+    const userId = JSON.parse(localStorage.getItem("profile")).user._id;
+    deleteAuthor(userId, bookId)
+      .then((res) => {})
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <>
       <div
@@ -28,6 +40,18 @@ function AuthorList() {
         className="my-10"
       >
         <h1 className="text-6xl text-center font-serif">Authors</h1>
+        {data && (
+          <div className="mt-2 text-center">
+            <button
+              onClick={() => {
+                preload();
+              }}
+              className="drop-shadow-lg hover:bg-white hover:text-red-300 rounded-full bg-red-300 text-white px-4 py-2"
+            >
+              <i className="fas fa-sync-alt"></i>
+            </button>
+          </div>
+        )}
         {!data && <Loading />}
         <div className="mt-10 mx-4">
           {data && (
@@ -49,12 +73,20 @@ function AuthorList() {
                   <button
                     className="text-orange-300"
                     onClick={() => {
+                      setAuthorId(item._id);
                       activateModal();
                     }}
                   >
                     Edit
                   </button>
-                  <button className="text-red-300">Delete</button>
+                  <button
+                    onClick={() => {
+                      authorDelete(item._id);
+                    }}
+                    className="text-red-300"
+                  >
+                    Delete
+                  </button>
                 </div>
               </div>
             ))}
@@ -74,7 +106,7 @@ function AuthorList() {
                 className="hover:bg-yellow-300 active:bg-white active:text-yellow-300 rounded-full bg-indigo-300 text-white px-4 py-2 cursor-pointer fas fa-times"
               ></i>
             </h1>
-            <UpdateAuthor />
+            <UpdateAuthor authorId={authorId} />
           </div>
         </div>
       </div>

@@ -34,6 +34,8 @@ export const createAuthor = (req, res) => {
 
 export const updateAuthor = async (req, res) => {
   const { name, desc } = req.body;
+  if (name === "" || desc === "")
+    return res.status(422).json({ error: "Fill all the fields!!" });
 
   Author.findByIdAndUpdate(
     { _id: req.author._id },

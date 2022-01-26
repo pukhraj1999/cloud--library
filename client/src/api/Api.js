@@ -36,3 +36,8 @@ export const updateBook = (formData, userId, bookId) =>
   API.put(`/api/book/${userId}/updatebook/${bookId}`, formData);
 export const deleteBook = (userId, bookId) =>
   API.delete(`/api/book/${userId}/deletebook/${bookId}`);
+
+export const updateAuthor = (formData, userId, authorId) =>
+  API.put(`/api/author/${userId}/updateauthor/${authorId}`, formData);
+export const deleteAuthor = (userId, authorId) =>
+  API.delete(`/api/author/${userId}/deleteauthor/${authorId}`);
