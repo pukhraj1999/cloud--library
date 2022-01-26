@@ -22,7 +22,7 @@ function Books() {
     <>
       <h1 className="my-6 text-center text-6xl font-bold">Recent Books</h1>
       {!data && <Loading />}
-      <div className="mx-12 my-12 flex justify-center">
+      <div className="container mx-auto">
         <div className="grid grid-flow-row lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-y-5 gap-x-5">
           {data &&
             data.map((item, key) => (

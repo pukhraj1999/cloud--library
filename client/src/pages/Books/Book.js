@@ -20,8 +20,8 @@ function Book() {
     <>
       {!data && <Loading />}
       {data && (
-        <div className="mx-6 my-12 flex flex-wrap justify-center">
-          <div className="grid grid-flow-row lg:grid-cols-2 grid-cols-1 items-center">
+        <div className="container mx-auto">
+          <div className=" mx-5 grid lg:grid-cols-2 grid-cols-1 items-center">
             <div className="flex justify-center">
               <img
                 className="rounded-3xl h-full w-3/4 md:h-[600px] lg:h-[800px]"
@@ -33,7 +33,7 @@ function Book() {
                 alt=""
               />
             </div>
-            <div className="drop-shadow-2xl h-fit bg-white my-12 lg:mx-6 flex-row  px-4 py-4 rounded-3xl">
+            <div className="mx-2 drop-shadow-2xl h-fit bg-white my-12 lg:mx-6 flex-row  px-4 py-4 rounded-3xl">
               <h1 className="text-center lg:text-5xl md:text-3xl text-3xl font-bold">
                 {data.name}
               </h1>
