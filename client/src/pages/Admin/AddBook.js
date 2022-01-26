@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { showAuthor, addBook } from "../../api/Api";
+import FileBase from "react-file-base64";
 
 function AddBook() {
   const activateModal = () => {
@@ -14,7 +15,6 @@ function AddBook() {
     coverImg: "",
     downloadLink: "",
     buyLink: "",
-    formData: new FormData(),
   });
   const [status, setStatus] = useState({
     error: "",
@@ -31,15 +31,13 @@ function AddBook() {
       });
   }, []);
   const handleChange = (e) => {
-    const { name } = e.target;
-    const value = name === "coverImg" ? e.target.files[0] : e.target.value;
-    data.formData.set(name, value);
+    const { name, value } = e.target;
     setData({ ...data, [name]: value });
   };
   const Submit = (e) => {
     e.preventDefault();
     const userId = JSON.parse(localStorage.getItem("profile")).user._id;
-    addBook(data.formData, userId)
+    addBook(data, userId)
       .then((res) => {
         setStatus({ success: "Successfully Added!!", error: "" });
         activateModal();
@@ -50,7 +48,6 @@ function AddBook() {
           coverImg: "",
           downloadLink: "",
           buyLink: "",
-          formData: new FormData(),
         });
       })
       .catch((err) => {
@@ -89,7 +86,7 @@ function AddBook() {
             />
           </div>
           <div className="flex justify-center mt-6">
-            <input
+            <div
               className="text-center text-indigo-300 
               lg:w-2/4 md:w-3/4 px-2 py-2 drop-shadow-lg
               bg-white outline-none text-xl
@@ -99,12 +96,15 @@ function AddBook() {
               file:text-white file:cursor-pointer
               hover:file:text-indigo-300
               hover:file:bg-white"
-              type="file"
-              placeholder="Choose an image"
-              name="coverImg"
-              accept="image"
-              onChange={handleChange}
-            />
+            >
+              <FileBase
+                type="file"
+                multiple={false}
+                onDone={({ base64 }) => {
+                  setData({ ...data, coverImg: base64 });
+                }}
+              />
+            </div>
           </div>
           <div className="flex justify-center mt-6">
             <select
