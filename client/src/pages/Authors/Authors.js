@@ -1,19 +1,35 @@
 import AuthorCard from "./components/AuthorCard";
+import Loading from "../Loading/Loading";
+import { showAuthor } from "../../api/Api";
+import { useState, useEffect } from "react";
 
 function Authors() {
+  const [data, setData] = useState(null);
+  const preload = () => {
+    const userId = JSON.parse(localStorage.getItem("profile")).user._id;
+    showAuthor(userId)
+      .then((res) => {
+        setData(res.data.authors);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    preload();
+  }, []);
   return (
     <>
       <h1 className="text-5xl font-serif font-bold text-center">
         Author Of Books
       </h1>
-      <div className="flex justify-center">
-        <div className="mx-4 my-4 grid grid-flow-row  gap-x-8 gap-y-8 lg:gap-x-10 lg:gap-y-4 grid-cols-2 lg:grid-cols-6 md:grid-cols-4">
-          <AuthorCard />
-          <AuthorCard />
-          <AuthorCard />
-          <AuthorCard />
-          <AuthorCard />
-          <AuthorCard />
+      {!data && <Loading />}
+      <div className="mt-5 container mx-auto">
+        <div className="flex flex-wrap justify-center items-center space-x-5 space-y-5">
+          {data &&
+            data.map((item, key) => (
+              <AuthorCard key={key} name={item.name} authorId={item._id} />
+            ))}
         </div>
       </div>
     </>
