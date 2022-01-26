@@ -55,7 +55,7 @@ function AuthorList() {
         {!data && <Loading />}
         <div className="mt-10 mx-4">
           {data && (
-            <div className="bg-gray-400 text-white shadow-2xl px-6 py-2 text-xl lg:text-3xl grid grid-cols-3">
+            <div className="bg-gray-400 text-white shadow-2xl px-6 py-2 text-xl lg:text-3xl grid md:grid-cols-3 grid-cols-1">
               <h1 className="text-center">ID</h1>
               <h1 className="text-center">Name</h1>
               <h1 className="text-center">Operation</h1>
@@ -65,7 +65,7 @@ function AuthorList() {
             data.map((item, key) => (
               <div
                 key={key}
-                className="items-center mt-6 shadow-2xl px-6 py-2 md:text-md lg:text-xl grid grid-cols-3"
+                className="items-center mt-6 shadow-2xl px-6 py-2 md:text-md lg:text-xl grid md:grid-cols-3 grid-cols-1"
               >
                 <h1 className="text-center">{item._id}</h1>
                 <h1 className="text-center">{item.name}</h1>
