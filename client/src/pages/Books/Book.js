@@ -6,6 +6,11 @@ import Loading from "../Loading/Loading";
 function Book() {
   const bookId = useParams();
   const [data, setData] = useState(null);
+  const [access, setAccess] = useState(true);
+  const activateModal = () => {
+    const toggle = document.getElementById("warning");
+    toggle.classList.toggle("hidden");
+  };
   useEffect(() => {
     getBook(bookId.id)
       .then((res) => {
@@ -14,6 +19,10 @@ function Book() {
       .catch((err) => {
         console.log(err);
       });
+    if (!localStorage.getItem("profile")) {
+      activateModal();
+      setAccess(false);
+    }
   }, []);
   return (
     <>
@@ -50,15 +59,17 @@ function Book() {
               <div className="flex justify-between my-3 space-x-3">
                 <a
                   className="shadow-lg shadow-indigo-300/50 hover:bg-yellow-300 active:bg-white active:text-yellow-300 rounded-xl text-white text-2xl bg-indigo-300 px-2 py-2 "
-                  href={data.buyLink}
-                  target="_blank"
+                  href={access ? data.buyLink : ""}
+                  target={access ? "_blank" : ""}
+                  rel="noreferrer"
                 >
                   Buy Now
                 </a>
                 <a
                   className="shadow-lg shadow-indigo-300/50 hover:bg-green-300 active:bg-white active:text-green-300 rounded-xl text-white text-2xl bg-indigo-300 px-2 py-2 "
-                  href={data.downloadLink}
-                  target="_blank"
+                  href={access ? data.downloadLink : ""}
+                  target={access ? "_blank" : ""}
+                  rel="noreferrer"
                 >
                   Download Pdf
                 </a>
@@ -67,6 +78,26 @@ function Book() {
           </div>
         </div>
       )}
+      <div id="warning" className="hidden modal">
+        <div
+          style={{ animation: "dropDown 0.7s ease-in-out" }}
+          className=" mx-4 my-4 flex justify-center"
+        >
+          <div className="lg:w-[40rem] rounded-2xl bg-white text-black px-4 py-4">
+            <h1 className="text-right">
+              <i
+                onClick={() => {
+                  activateModal();
+                }}
+                className="hover:bg-yellow-300 active:bg-white active:text-yellow-300 rounded-full bg-indigo-300 text-white px-4 py-2 cursor-pointer fas fa-times"
+              ></i>
+            </h1>
+            <h1 className="text-center text-2xl text-yellow-500 mt-4">
+              You Must Sign in First to download or Buy!!
+            </h1>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
