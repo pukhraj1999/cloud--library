@@ -58,7 +58,7 @@ function Book() {
               <p className="text-md lg:text-2xl md:text-lg ">{data.desc}</p>
               <div className="flex justify-between my-3 space-x-3">
                 <a
-                  className="shadow-lg shadow-indigo-300/50 hover:bg-yellow-300 active:bg-white active:text-yellow-300 rounded-xl text-white text-2xl bg-indigo-300 px-2 py-2 "
+                  className="shadow-lg shadow-indigo-300/50 hover:bg-yellow-300 active:bg-white active:text-yellow-300 rounded-xl text-white text-lg md:text-2xl bg-indigo-300 px-2 py-2 "
                   href={access ? data.buyLink : ""}
                   target={access ? "_blank" : ""}
                   rel="noreferrer"
@@ -66,7 +66,7 @@ function Book() {
                   Buy Now
                 </a>
                 <a
-                  className="shadow-lg shadow-indigo-300/50 hover:bg-green-300 active:bg-white active:text-green-300 rounded-xl text-white text-2xl bg-indigo-300 px-2 py-2 "
+                  className="shadow-lg shadow-indigo-300/50 hover:bg-green-300 active:bg-white active:text-green-300 rounded-xl text-white text-lg md:text-2xl bg-indigo-300 px-2 py-2 "
                   href={access ? data.downloadLink : ""}
                   target={access ? "_blank" : ""}
                   rel="noreferrer"
