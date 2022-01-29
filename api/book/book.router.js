@@ -1,21 +1,21 @@
-import express from "express";
-export const bookRouter = express.Router();
+const express = require("express");
+const bookRouter = express.Router();
 
 //--------Importing Controllers And Middlewares------------------
-import {
+const {
   getUserById,
   isSignedIn,
   isAuthenticated,
   isAdmin,
-} from "../auth/auth.middleware";
-import {
+} = require("../auth/auth.middleware");
+const {
   getAllBooks,
   getBook,
   createBook,
   updateBook,
   deleteBook,
-} from "./book.controller";
-import { getBookById } from "./book.middleware";
+} = require("./book.controller");
+const { getBookById } = require("./book.middleware");
 //-----------------------------------------------
 
 //----------Using Controllers For Book--------------------
@@ -45,3 +45,7 @@ bookRouter.delete(
   deleteBook
 );
 //-------------------------------------------------------
+
+//-------Exporting--------------------
+module.exports = { bookRouter };
+//------------------------------------

@@ -1,21 +1,21 @@
-import express from "express";
-import { check } from "express-validator";
-export const authRouter = express.Router();
+const express = require("express");
+const { check } = require("express-validator");
+const authRouter = express.Router();
 
 //--------Importing Controllers And Middlewares------------------
-import { signup, signin, signout } from "./auth.controller";
-import {
+const { signup, signin, signout } = require("./auth.controller");
+const {
   getAllUsers,
   getUser,
   updateUser,
   deleteUser,
-} from "./auth.controller";
-import {
+} = require("./auth.controller");
+const {
   isSignedIn,
   isAuthenticated,
   isAdmin,
   getUserById,
-} from "./auth.middleware";
+} = require("./auth.middleware");
 //-----------------------------------------------
 
 //----------Using Controllers For Auth--------------------
@@ -69,3 +69,7 @@ authRouter.post(
   deleteUser
 );
 //--------------------------------------------------------
+
+//-------Exporting--------------------
+module.exports = { authRouter };
+//------------------------------------

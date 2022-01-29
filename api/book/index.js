@@ -1,1 +1,5 @@
-export { bookRouter } from "./book.router";
+const { bookRouter } = require("./book.router");
+
+//-------Exporting--------------------
+module.exports = { bookRouter };
+//------------------------------------

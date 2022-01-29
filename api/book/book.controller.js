@@ -1,7 +1,7 @@
-import Book from "./book.model";
+const Book = require("./book.model");
 
 //-----------CRUD OPERATION FOR Book-----------------------------------------------------
-export const getAllBooks = async (req, res) => {
+exports.getAllBooks = async (req, res) => {
   try {
     const books = await Book.find().populate("author", "_id name");
     res.status(200).json({ books: books });
@@ -10,11 +10,11 @@ export const getAllBooks = async (req, res) => {
   }
 };
 
-export const getBook = (req, res) => {
+exports.getBook = (req, res) => {
   return res.json({ book: req.book });
 };
 
-export const createBook = async (req, res) => {
+exports.createBook = async (req, res) => {
   const { name, desc, author, coverImg, downloadLink, buyLink } = req.body;
   if (!name || !desc || !author || !coverImg || !downloadLink || !buyLink)
     return res.status(422).json({ error: "Fill all the fields!!" });
@@ -37,7 +37,7 @@ export const createBook = async (req, res) => {
   }
 };
 
-export const updateBook = (req, res) => {
+exports.updateBook = (req, res) => {
   const { name, desc, author, coverImg, downloadLink, buyLink } = req.body;
   if (!name || !desc || !author || !coverImg || !downloadLink || !buyLink)
     return res.status(422).json({ error: "Fill all the fields!!" });
@@ -66,7 +66,7 @@ export const updateBook = (req, res) => {
   );
 };
 
-export const deleteBook = async (req, res) => {
+exports.deleteBook = async (req, res) => {
   Book.findOneAndDelete(
     {
       _id: req.book._id,

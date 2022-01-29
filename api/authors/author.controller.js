@@ -1,7 +1,7 @@
-import Author from "./author.model";
+const Author = require("./author.model");
 
 //-----------CRUD OPERATION FOR Author-----------------------------------------------------
-export const getAllAuthors = async (req, res) => {
+exports.getAllAuthors = async (req, res) => {
   try {
     const authors = await Author.find();
     res.status(200).json({ authors });
@@ -10,11 +10,11 @@ export const getAllAuthors = async (req, res) => {
   }
 };
 
-export const getAuthor = (req, res) => {
+exports.getAuthor = (req, res) => {
   return res.json({ author: req.author });
 };
 
-export const createAuthor = (req, res) => {
+exports.createAuthor = (req, res) => {
   const { name, desc } = req.body;
   if (name === "" || desc === "")
     return res.status(422).json({ error: "Fill all the fields!!" });
@@ -32,7 +32,7 @@ export const createAuthor = (req, res) => {
   }
 };
 
-export const updateAuthor = async (req, res) => {
+exports.updateAuthor = async (req, res) => {
   const { name, desc } = req.body;
   if (name === "" || desc === "")
     return res.status(422).json({ error: "Fill all the fields!!" });
@@ -57,7 +57,7 @@ export const updateAuthor = async (req, res) => {
   );
 };
 
-export const deleteAuthor = async (req, res) => {
+exports.deleteAuthor = async (req, res) => {
   Author.findOneAndDelete(
     {
       _id: req.author._id,

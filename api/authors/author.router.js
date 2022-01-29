@@ -1,21 +1,21 @@
-import express from "express";
-export const authorRouter = express.Router();
+const express = require("express");
+const authorRouter = express.Router();
 
 //--------Importing Controllers And Middlewares------------------
-import {
+const {
   getUserById,
   isSignedIn,
   isAuthenticated,
   isAdmin,
-} from "../auth/auth.middleware";
-import {
+} = require("../auth/auth.middleware");
+const {
   getAllAuthors,
   getAuthor,
   createAuthor,
   updateAuthor,
   deleteAuthor,
-} from "./author.controller";
-import { getAuthorById } from "./author.middleware";
+} = require("./author.controller");
+const { getAuthorById } = require("./author.middleware");
 //-----------------------------------------------
 
 //----------Using Controllers For Author--------------------
@@ -45,3 +45,7 @@ authorRouter.delete(
   deleteAuthor
 );
 //-------------------------------------------------------
+
+//-------Exporting--------------------
+module.exports = { authorRouter };
+//------------------------------------

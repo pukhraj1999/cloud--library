@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 const bookSchema = new mongoose.Schema(
   {
     name: {
@@ -31,4 +31,4 @@ const bookSchema = new mongoose.Schema(
 
 const Book = new mongoose.model("Book", bookSchema);
 
-export default Book;
+module.exports = Book;

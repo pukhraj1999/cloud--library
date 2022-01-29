@@ -1,9 +1,9 @@
-import { validationResult } from "express-validator";
-import jwt from "jsonwebtoken";
-import User from "./user.model";
+const { validationResult } = require("express-validator");
+const jwt = require("jsonwebtoken");
+const User = require("./user.model");
 
 //-----------User Authentication-----------------------------------------------------
-export const signup = async (req, res) => {
+exports.signup = async (req, res) => {
   const { fname, lname, email, role, password, confirmPasswd } = req.body;
   const errors = validationResult(req);
 
@@ -42,7 +42,7 @@ export const signup = async (req, res) => {
   });
 };
 
-export const signin = (req, res) => {
+exports.signin = (req, res) => {
   const { email, password } = req.body;
   const errors = validationResult(req);
 
@@ -70,14 +70,14 @@ export const signin = (req, res) => {
   );
 };
 
-export const signout = (req, res) => {
+exports.signout = (req, res) => {
   res.clearCookie("token");
   res.json({ message: "user sign out successfully." });
 };
 //-----------------------------------------------------------------------------------
 
 //-----------CRUD OPERATION FOR USER-----------------------------------------------------
-export const getAllUsers = async (req, res) => {
+exports.getAllUsers = async (req, res) => {
   try {
     const users = await User.find();
     users.map((user) => {
@@ -92,7 +92,7 @@ export const getAllUsers = async (req, res) => {
   }
 };
 
-export const getUser = (req, res) => {
+exports.getUser = (req, res) => {
   req.profile.salt = undefined;
   req.profile.encry_password = undefined;
   req.profile.createdAt = undefined;
@@ -100,7 +100,7 @@ export const getUser = (req, res) => {
   return res.json({ user: req.profile });
 };
 
-export const updateUser = async (req, res) => {
+exports.updateUser = async (req, res) => {
   const { name, email, role, password, confirmPasswd } = req.body;
   try {
     if (password !== confirmPasswd)
@@ -134,7 +134,7 @@ export const updateUser = async (req, res) => {
     }
   );
 };
-export const deleteUser = async (req, res) => {
+exports.deleteUser = async (req, res) => {
   const { deleteId } = req.body;
   User.findOneAndDelete(
     {

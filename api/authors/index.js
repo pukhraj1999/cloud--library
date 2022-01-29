@@ -1,1 +1,5 @@
-export { authorRouter } from "./author.router";
+const { authorRouter } = require("./author.router");
+
+//-------Exporting--------------------
+module.exports = { authorRouter };
+//------------------------------------

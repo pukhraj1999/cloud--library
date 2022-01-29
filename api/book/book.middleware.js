@@ -1,4 +1,4 @@
-import Book from "./book.model";
+const Book = require("./book.model");
 // import path from "path";
 // import multer from "multer";
 //---------Multer for file upload-----------------------------------------------------
@@ -59,7 +59,7 @@ import Book from "./book.model";
 //------------------------------------------------------------------------------------
 
 //---------Book MIDDLEWARE------------------------------------------------------------
-export const getBookById = (req, res, next, id) => {
+exports.getBookById = (req, res, next, id) => {
   Book.findById(id)
     .populate("author", "_id name")
     .exec((err, book) => {

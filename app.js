@@ -1,8 +1,8 @@
-import express from "express";
-import mongoose from "mongoose";
-import bodyParser from "body-parser";
-import cookieParser from "cookie-parser";
-import cors from "cors";
+const express = require("express");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
 require("dotenv").config();
 
 //--------Connecting database---------------------
@@ -30,7 +30,7 @@ app.use(cookieParser());
 //----------------------------------------------------------
 
 //----------Routes-------------------------------------
-import { allRoutes } from "./api";
+const allRoutes = require("./api/index");
 app.use("/api", allRoutes);
 //---------------------------------------------------------
 
