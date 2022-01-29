@@ -26,6 +26,7 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 app.use(cookieParser());
+app.use(express.static(path.join(__dirname, "client", "build")));
 // app.use("/api/uploads", express.static("uploads"));
 //----------------------------------------------------------
 
@@ -35,7 +36,9 @@ app.use("/api", allRoutes);
 //---------------------------------------------------------
 
 //----------Deploying-------------------------------------
-///testing...
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
 //---------------------------------------------------------
 
 //--------Hosting on local server-------------------------------
