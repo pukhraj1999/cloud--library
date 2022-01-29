@@ -58,9 +58,9 @@ export const updateBook = (req, res) => {
       new: true,
       useFindAndModify: false,
     },
-    (error, author) => {
-      if (error || !author)
-        return res.status(400).json({ error: "author not found" });
+    (error, book) => {
+      if (error || !book)
+        return res.status(400).json({ error: "Book not found!!" });
       return res.status(200).json({ msg: "Successfully Updated!!", author });
     }
   );
