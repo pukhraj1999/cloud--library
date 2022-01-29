@@ -11,8 +11,7 @@ function AuthorList() {
   const [data, setData] = useState(null);
   const [authorId, setAuthorId] = useState(null);
   const preload = () => {
-    const userId = JSON.parse(localStorage.getItem("profile")).user._id;
-    showAuthor(userId)
+    showAuthor()
       .then((res) => {
         setData(res.data.authors);
       })

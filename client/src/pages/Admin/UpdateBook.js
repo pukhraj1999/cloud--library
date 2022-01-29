@@ -19,9 +19,8 @@ function UpdateBook({ bookId }) {
   });
   const history = useNavigate();
   useEffect(() => {
-    const userId = JSON.parse(localStorage.getItem("profile")).user._id;
     if (bookId) {
-      getBook(userId, bookId)
+      getBook(bookId)
         .then((res) => {
           setData({
             ...data,
@@ -32,7 +31,7 @@ function UpdateBook({ bookId }) {
         .catch((err) => {
           console.log(err);
         });
-      showAuthor(userId)
+      showAuthor()
         .then((res) => {
           setAuthorData(res.data.authors);
         })
@@ -40,7 +39,7 @@ function UpdateBook({ bookId }) {
           console.log(err);
         });
     }
-  }, [bookId]);
+  }, [bookId, data]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

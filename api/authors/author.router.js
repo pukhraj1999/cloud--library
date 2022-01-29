@@ -21,20 +21,8 @@ import { getAuthorById } from "./author.middleware";
 //----------Using Controllers For Author--------------------
 authorRouter.param("userId", getUserById);
 authorRouter.param("authorId", getAuthorById);
-authorRouter.get(
-  "/:userId/getallauthors",
-  isSignedIn,
-  isAuthenticated,
-  isAdmin,
-  getAllAuthors
-);
-authorRouter.get(
-  "/:userId/:authorId",
-  isSignedIn,
-  isAuthenticated,
-  isAdmin,
-  getAuthor
-);
+authorRouter.get("/getallauthors", getAllAuthors);
+authorRouter.get("/:authorId", getAuthor);
 authorRouter.post(
   "/:userId/createauthor",
   isSignedIn,

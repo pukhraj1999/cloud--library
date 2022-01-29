@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import UserList from "./UserList";
 import AddBook from "./AddBook";
 import AddAuthor from "./AddAuthor";
@@ -6,11 +7,25 @@ import BookList from "./BookList";
 import AuthorList from "./AuthorList";
 
 function Admin() {
+  const history = useNavigate();
   const [select, setSelect] = useState("0");
   const activateModal = () => {
     const toggle = document.getElementById("adminLinks");
     toggle.classList.toggle("hidden");
   };
+  useEffect(() => {
+    if (!localStorage.getItem("profile")) {
+      history("/");
+      window.location.reload();
+    }
+    if (localStorage.getItem("profile")) {
+      const user = JSON.parse(localStorage.getItem("profile")).user;
+      if (user.role === 0) {
+        history("/");
+        window.location.reload();
+      }
+    }
+  });
   return (
     <>
       <div className="font-serif flex justify-center">

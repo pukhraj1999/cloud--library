@@ -13,9 +13,8 @@ function UpdateAuthor({ authorId }) {
   });
   const history = useNavigate();
   useEffect(() => {
-    const userId = JSON.parse(localStorage.getItem("profile")).user._id;
     if (authorId) {
-      getAuthor(userId, authorId)
+      getAuthor(authorId)
         .then((res) => {
           setData({
             ...data,
@@ -26,7 +25,7 @@ function UpdateAuthor({ authorId }) {
           console.log(err);
         });
     }
-  }, [authorId]);
+  }, [authorId, data]);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData({ ...data, [name]: value });

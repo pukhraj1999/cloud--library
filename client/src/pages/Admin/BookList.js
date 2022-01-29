@@ -11,8 +11,7 @@ function BookList() {
   const [data, setData] = useState(null);
   const [bookId, setBookId] = useState(null);
   const preload = () => {
-    const userId = JSON.parse(localStorage.getItem("profile")).user._id;
-    showBook(userId)
+    showBook()
       .then((res) => {
         setData(res.data.books);
       })

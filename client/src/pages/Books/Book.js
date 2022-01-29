@@ -7,8 +7,7 @@ function Book() {
   const bookId = useParams();
   const [data, setData] = useState(null);
   useEffect(() => {
-    const userId = JSON.parse(localStorage.getItem("profile")).user._id;
-    getBook(userId, bookId.id)
+    getBook(bookId.id)
       .then((res) => {
         setData(res.data.book);
       })

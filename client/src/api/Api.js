@@ -18,14 +18,11 @@ export const signup = (formData) => API.post("/api/signup", formData);
 export const signin = (formData) => API.post("/api/signin", formData);
 
 export const showUser = (userId) => API.get(`/api/user/${userId}/getusers`);
-export const showAuthor = (userId) =>
-  API.get(`/api/author/${userId}/getallauthors`);
-export const showBook = (userId) => API.get(`/api/book/${userId}/getallbooks`);
+export const showAuthor = () => API.get(`/api/author/getallauthors`);
+export const showBook = () => API.get(`/api/book/getallbooks`);
 
-export const getBook = (userId, bookId) =>
-  API.get(`/api/book/${userId}/${bookId}`);
-export const getAuthor = (userId, authorId) =>
-  API.get(`/api/author/${userId}/${authorId}`);
+export const getBook = (bookId) => API.get(`/api/book/${bookId}`);
+export const getAuthor = (authorId) => API.get(`/api/author/${authorId}`);
 
 export const addAuthor = (formData, userId) =>
   API.post(`/api/author/${userId}/createauthor`, formData);

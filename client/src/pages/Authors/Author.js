@@ -9,15 +9,14 @@ function Author() {
   const [data, setData] = useState(null);
   const [books, setBooks] = useState(null);
   useEffect(() => {
-    const userId = JSON.parse(localStorage.getItem("profile")).user._id;
-    getAuthor(userId, authorId.id)
+    getAuthor(authorId.id)
       .then((res) => {
         setData(res.data.author);
       })
       .catch((err) => {
         console.log(err);
       });
-    showBook(userId)
+    showBook()
       .then((res) => {
         setBooks(
           res.data.books.filter((book) => {
@@ -28,9 +27,10 @@ function Author() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [authorId.id]);
   return (
     <>
+      {!data && <Loading />}
       {data && (
         <div className="mx-4 my-4">
           <h1 className="font-serif text-5xl md:text-6xl text-center">
@@ -40,6 +40,7 @@ function Author() {
           <h1 className="font-serif text-5xl md:text-6xl text-center">
             Books Written
           </h1>
+          {!books && <Loading />}
           <div className="container mx-auto">
             <div className="grid grid-flow-row lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-y-5 gap-x-5">
               {books &&

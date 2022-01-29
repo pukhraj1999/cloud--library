@@ -21,20 +21,8 @@ import { getBookById } from "./book.middleware";
 //----------Using Controllers For Book--------------------
 bookRouter.param("userId", getUserById);
 bookRouter.param("bookId", getBookById);
-bookRouter.get(
-  "/:userId/getallbooks",
-  isSignedIn,
-  isAuthenticated,
-  isAdmin,
-  getAllBooks
-);
-bookRouter.get(
-  "/:userId/:bookId",
-  isSignedIn,
-  isAuthenticated,
-  isAdmin,
-  getBook
-);
+bookRouter.get("/getallbooks", getAllBooks);
+bookRouter.get("/:bookId", getBook);
 bookRouter.post(
   "/:userId/createbook",
   isSignedIn,
