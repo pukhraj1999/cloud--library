@@ -34,12 +34,6 @@ import { allRoutes } from "./api";
 app.use("/api", allRoutes);
 //---------------------------------------------------------
 
-//---------Deploying---------------------------------------
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-});
-//----------------------------------------------------------
-
 //--------Hosting on local server-------------------------------
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
