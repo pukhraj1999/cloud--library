@@ -5,6 +5,7 @@ import Authors from "./pages/Authors/Authors.js";
 import Book from "./pages/Books/Book.js";
 import Books from "./pages/Books/Books.js";
 import Comics from "./pages/Comics/Comics.js";
+import Error from "./pages/Error/Error.js";
 import Navbar from "./pages/Navbar/Navbar.js";
 import Signin from "./pages/Registrations/Signin.js";
 import Signout from "./pages/Registrations/Signout.js";
@@ -24,6 +25,7 @@ function App() {
         <Route exact path="/signin" element={<Signin />} />
         <Route exact path="/signup" element={<Signup />} />
         <Route exact path="/signout" element={<Signout />} />
+        <Route path="*" element={<Error />} />
       </Routes>
     </>
   );
