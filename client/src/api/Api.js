@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURl: "https://cloud--library.herokuapp.com",
+  baseURl: "https://cloud--library.herokuapp.com/",
 });
 
 API.interceptors.request.use((req) => {
