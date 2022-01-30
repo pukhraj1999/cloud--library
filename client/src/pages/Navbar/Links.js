@@ -8,6 +8,10 @@ function Links() {
     const toggle = document.getElementById("modal");
     toggle.classList.toggle("hidden");
   };
+  const displayMenu = () => {
+    const toggler = document.getElementById("menu");
+    toggler.classList.toggle("active");
+  };
   useEffect(() => {
     if (localStorage.getItem("profile")) setUser(true);
   }, []);
@@ -15,18 +19,21 @@ function Links() {
     <>
       <div id="menu" className="nav__menu space-x-4 ">
         <NavLink
+          onClick={() => displayMenu()}
           className="cursor-pointer hover:bg-indigo-500 hover:rounded-full active:bg-red-300 drop-shadow-lg px-2 py-4 "
           to="/"
         >
           Books
         </NavLink>
         <NavLink
+          onClick={() => displayMenu()}
           className="cursor-pointer hover:bg-indigo-500 hover:rounded-full active:bg-red-300 drop-shadow-lg px-2 py-4 "
           to="/comics"
         >
           Comics
         </NavLink>
         <NavLink
+          onClick={() => displayMenu()}
           className="cursor-pointer hover:bg-indigo-500 hover:rounded-full active:bg-red-300 drop-shadow-lg px-2 py-4 "
           to="/authors"
         >
@@ -35,6 +42,7 @@ function Links() {
         <span
           onClick={() => {
             activateModal();
+            displayMenu();
           }}
           className="cursor-pointer hover:bg-indigo-500 hover:rounded-full active:bg-red-300 drop-shadow-lg px-2 py-4 "
         >
@@ -43,12 +51,14 @@ function Links() {
         {!user && (
           <>
             <NavLink
+              onClick={() => displayMenu()}
               className="cursor-pointer hover:bg-indigo-500 hover:rounded-full active:bg-red-300 drop-shadow-lg px-2 py-4 "
               to="/signin"
             >
               Sign in
             </NavLink>
             <NavLink
+              onClick={() => displayMenu()}
               className="cursor-pointer hover:bg-indigo-500 hover:rounded-full active:bg-red-300 drop-shadow-lg px-4 py-4 "
               to="/signup"
             >
@@ -64,6 +74,7 @@ function Links() {
               onClick={() => {
                 setTimeout(() => {
                   setUser(false);
+                  displayMenu();
                 }, 200);
               }}
             >
