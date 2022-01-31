@@ -39,7 +39,7 @@ function UpdateBook({ bookId }) {
           console.log(err);
         });
     }
-  }, [bookId, data]);
+  }, [bookId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

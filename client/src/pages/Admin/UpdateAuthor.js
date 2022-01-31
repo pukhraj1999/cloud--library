@@ -25,7 +25,7 @@ function UpdateAuthor({ authorId }) {
           console.log(err);
         });
     }
-  }, [authorId, data]);
+  }, [authorId]);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData({ ...data, [name]: value });
