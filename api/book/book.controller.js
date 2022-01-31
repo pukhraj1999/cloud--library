@@ -29,14 +29,14 @@ exports.createBook = async (req, res) => {
     });
     book.save((err, book) => {
       if (err || !book) {
-        console.log(err);
-        return res.status(400).json({ error: "Saving book in DB failed!!" });
+        return res
+          .status(400)
+          .json({ error: "Saving book in DB failed!!" + " " + err });
       }
       return res.status(200).json(book);
     });
   } catch (err) {
-    console.log("Catch: " + err);
-    res.status(400).json({ error: "Saving book in DB failed!!" });
+    res.status(400).json({ error: "Saving book in DB failed!!" + " " + err });
   }
 };
 
